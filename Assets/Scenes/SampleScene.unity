@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d998da8ea3bf1d47b75c7df78f96fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeScale: 0.1
 --- !u!4 &13863588
 Transform:
   m_ObjectHideFlags: 0
@@ -1461,7 +1462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 36.5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 079dc8b861cb2144d8eeed0aa4f537a7, type: 2}
   m_sharedMaterial: {fileID: -8774119849631446261, guid: 079dc8b861cb2144d8eeed0aa4f537a7, type: 2}
@@ -1590,10 +1591,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d40d54c0267b28f479912f1f9762348f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerText: {fileID: 1560260470}
-  moistureText: {fileID: 582161773}
-  stressText: {fileID: 2137378318}
-  temperatureText: {fileID: 874303355}
+  hungerText: {fileID: 1560260472}
+  moistureText: {fileID: 582161775}
+  stressText: {fileID: 2137378320}
+  temperatureText: {fileID: 874303357}
 --- !u!1 &939408269
 GameObject:
   m_ObjectHideFlags: 0
@@ -2788,9 +2789,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fac370d8c51db04d910d7ac516a7359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yearText: {fileID: 194096435}
-  dateText: {fileID: 1077348568}
-  timeText: {fileID: 637032805}
+  yearText: {fileID: 194096437}
+  dateText: {fileID: 1077348570}
+  timeText: {fileID: 637032807}
 --- !u!1 &1560260470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3650,7 +3651,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: '0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 079dc8b861cb2144d8eeed0aa4f537a7, type: 2}
   m_sharedMaterial: {fileID: -8774119849631446261, guid: 079dc8b861cb2144d8eeed0aa4f537a7, type: 2}

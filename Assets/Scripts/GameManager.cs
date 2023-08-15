@@ -2,28 +2,68 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
-    void Start()
+    [SerializeField]
+    private float timeScale;
+    
+    public static GameManager Instance { get; private set; }
+
+    private void Awake()
     {
-        TimeData.Instance.SetDate(1001,1,1);
-        TimeData.Instance.SetTime(0,0);
-        TimeData.Instance.SetTimeScale(0.1f);
-        StartCoroutine(TimeCoroutine());
+        Instance = this;
     }
 
-    void Update()
+    void Start()
+    {
+        InitData();
+        StartCoroutine(TimeCoroutine());
+        //StartCoroutine(EndTimer());
+    }
+
+    private void InitData()
+    {
+        TimeData.Instance.InitTime();
+        TimeData.Instance.SetTimeScale(timeScale);
+        StatusData.Instance.InitStatus();
+    }
+
+    public void GameOver()
     {
         
     }
-
+    
     IEnumerator TimeCoroutine()
     {
+        var elapsed = 0.0f;
+        var timeLength = TimeData.Instance.TimeScale;
         while (true)
         {
-            yield return new WaitForSeconds(TimeData.Instance.TimeScale);
+            while (elapsed <= timeLength)
+            {
+                yield return null;
+                elapsed += Time.deltaTime;
+            }
+
+            elapsed -= timeLength;
             TimeData.Instance.AddTime(0,1);
         }
+    }
+
+    IEnumerator EndTimer()
+    {
+        var elapsed = 0.0f;
+        const int timeLength = 144;
+        
+        while (elapsed <= timeLength)
+        {
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+        
+        Debug.Log("게임 종료");
+        EditorApplication.isPaused = true;
     }
 }

@@ -7,11 +7,11 @@ using TMPro;
 public class TimeData : MonoBehaviour
 {
     [SerializeField]
-    private GameObject yearText;
+    private TMP_Text yearText;
     [SerializeField]
-    private GameObject dateText;
+    private TMP_Text dateText;
     [SerializeField]
-    private GameObject timeText;
+    private TMP_Text timeText;
     
     public static TimeData Instance { get; private set; }
 
@@ -20,6 +20,12 @@ public class TimeData : MonoBehaviour
     public int Minute { get; private set; }
 
     private int[] daysInMonth = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    public void InitTime()
+    {
+        SetDate(1001,1,1);
+        SetTime(0,0);
+    }
     
     private void Awake()
     {
@@ -42,7 +48,7 @@ public class TimeData : MonoBehaviour
     {
         Hour += hour;
         Minute += minute;
-        timeText.GetComponent<TMP_Text>().text = $"{Hour:D2}:{Minute:D2}";
+        timeText.text = $"{Hour:D2}:{Minute:D2}";
         HourUpdate();
         DayUpdate();
     }
@@ -52,36 +58,34 @@ public class TimeData : MonoBehaviour
         if (Minute < 60) return;
         Hour++;
         Minute -= 60;
-        timeText.GetComponent<TMP_Text>().text = $"{Hour:D2}:{Minute:D2}";
+        timeText.text = $"{Hour:D2}:{Minute:D2}";
     }
 
     private void DayUpdate()
     {
         if (Hour < 24) return;
         Hour -= 24;
-        timeText.GetComponent<TMP_Text>().text = $"{Hour:D2}:{Minute:D2}";
+        timeText.text = $"{Hour:D2}:{Minute:D2}";
         AddDate(0, 0, 1);
     }
     
     public void SetDate(int year, int month, int day)
     {
-        yearText.GetComponent<TMP_Text>().text = $"{year:D4}";
-        dateText.GetComponent<TMP_Text>().text = $"{month:D2}.{day:D2}";
+        yearText.text = $"{year:D4}";
+        dateText.text = $"{month:D2}.{day:D2}";
     }
     
     public void AddDate(int year, int month, int day)
     {
-        var yearTextComponent = yearText.GetComponent<TMP_Text>();
-        var dateTextComponent = dateText.GetComponent<TMP_Text>();
-        var yearTextValue = int.Parse(yearTextComponent.text);
-        var dateTextValue = dateTextComponent.text.Split('.');
+        var yearTextValue = int.Parse(yearText.text);
+        var dateTextValue = dateText.text.Split('.');
         var monthTextValue = int.Parse(dateTextValue[0]);
         var dayTextValue = int.Parse(dateTextValue[1]);
         
-        yearTextComponent.text = $"{yearTextValue + year:D4}";
-        dateTextComponent.text = $"{monthTextValue + month:D2}.{dayTextValue + day:D2}";
+        yearText.text = $"{yearTextValue + year:D4}";
+        dateText.text = $"{monthTextValue + month:D2}.{dayTextValue + day:D2}";
 
-        MonthUpdate(dayTextValue, day, monthTextValue, yearTextValue, dateTextComponent, monthTextValue);
+        MonthUpdate(dayTextValue, day, monthTextValue, yearTextValue, dateText, monthTextValue);
         YearUpdate();
     }
     
@@ -109,15 +113,13 @@ public class TimeData : MonoBehaviour
     
     private void YearUpdate()
     {
-        var yearTextComponent = yearText.GetComponent<TMP_Text>();
-        var dateTextComponent = dateText.GetComponent<TMP_Text>();
-        var yearTextValue = int.Parse(yearTextComponent.text);
-        var dateTextValue = dateTextComponent.text.Split('.');
+        var yearTextValue = int.Parse(yearText.text);
+        var dateTextValue = dateText.text.Split('.');
         var monthTextValue = int.Parse(dateTextValue[0]);
         var dayTextValue = int.Parse(dateTextValue[1]);
         
         if (monthTextValue != 13) return;
-        yearTextComponent.text = $"{yearTextValue + 1:D4}";
-        dateTextComponent.text = $"01.{dayTextValue:D2}";
+        yearText.text = $"{yearTextValue + 1:D4}";
+        dateText.text = $"01.{dayTextValue:D2}";
     }
 }
