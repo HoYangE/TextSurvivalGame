@@ -18,16 +18,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InitData();
         StartCoroutine(TimeCoroutine());
         //StartCoroutine(EndTimer());
-    }
-
-    private void InitData()
-    {
-        TimeData.Instance.InitTime();
-        TimeData.Instance.SetTimeScale(timeScale);
-        StatusData.Instance.InitStatus();
     }
 
     public void GameOver()

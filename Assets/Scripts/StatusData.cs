@@ -98,7 +98,7 @@ public class StatusData : MonoBehaviour
         if (Temperature <= 28 && Temperature >= 42) GameManager.Instance.GameOver();
     }
 
-    public void InitStatus()
+    private void InitStatus()
     {
         Hunger = 100;
         Moisture = 100;
@@ -109,6 +109,7 @@ public class StatusData : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        InitStatus();
     }
 
     private void Start()
