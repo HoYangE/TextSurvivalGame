@@ -10,9 +10,7 @@ public class TextList : MonoBehaviour
     private GameObject listParent;
     [SerializeField]
     private GameObject textPrefab;
-
-    [SerializeField]
-    private Vector3 startPosition;
+    
     [SerializeField]
     private int maxTextCount;
 
@@ -21,21 +19,8 @@ public class TextList : MonoBehaviour
         var textObject = Instantiate(textPrefab, listParent.transform);
         textObject.transform.SetAsFirstSibling();
         textObject.GetComponent<TMP_Text>().text = text;
-        PushText();
-    }
-
-    private void PushText()
-    {
-        for (var i = 0; i < listParent.transform.childCount; i++)
-        {
-            if (i >= maxTextCount)
-            {
-                Destroy(listParent.transform.GetChild(i).gameObject);
-                break;
-            }
-
-            var textObject = listParent.transform.GetChild(i);
-            textObject.transform.localPosition = new Vector3(0, startPosition.y - 70 * i, 0);
-        }
+        
+        if (listParent.transform.childCount > maxTextCount)
+            Destroy(listParent.transform.GetChild(listParent.transform.childCount-1).gameObject);
     }
 }

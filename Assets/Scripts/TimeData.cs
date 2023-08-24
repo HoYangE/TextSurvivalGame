@@ -24,8 +24,8 @@ public class TimeData : MonoBehaviour
 
     private void InitTime()
     {
-        SetDate(1001, 7, 29);
-        SetTime(15, 0);
+        SetDate(1001, 4, 1);
+        SetTime(10, 0);
     }
 
     private void Awake()

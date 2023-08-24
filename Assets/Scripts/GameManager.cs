@@ -19,7 +19,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(TimeCoroutine());
-        //StartCoroutine(EndTimer());
     }
 
     public void GameOver()
@@ -42,20 +41,5 @@ public class GameManager : MonoBehaviour
             elapsed -= timeLength;
             TimeData.Instance.AddTime(0,1);
         }
-    }
-
-    IEnumerator EndTimer()
-    {
-        var elapsed = 0.0f;
-        const int timeLength = 144;
-        
-        while (elapsed <= timeLength)
-        {
-            yield return null;
-            elapsed += Time.deltaTime;
-        }
-        
-        Debug.Log("게임 종료");
-        EditorApplication.isPaused = true;
     }
 }

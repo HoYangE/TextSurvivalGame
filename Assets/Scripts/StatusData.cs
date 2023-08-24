@@ -14,6 +14,8 @@ public class StatusData : MonoBehaviour
     private TMP_Text stressText;
     [SerializeField]
     private TMP_Text temperatureText;
+    [SerializeField]
+    private TMP_Text positionText;
     
     public static StatusData Instance { get; private set; }
 
@@ -21,7 +23,12 @@ public class StatusData : MonoBehaviour
     private int _moisture;
     private int _stress;
     private float _temperature;
-
+    private string _position;
+    
+    private float _heatSource;
+    private float _insulation;
+    private float _disease;
+    
     public int Hunger 
     {
         get => _hunger;
@@ -58,10 +65,20 @@ public class StatusData : MonoBehaviour
         private set
         {
             _temperature = value;
-            temperatureText.text = value.ToString();
+            temperatureText.text = (Mathf.Floor(value*10f)/10f).ToString("F1");
         }
     }
 
+    public string Position
+    {
+        get => _position;
+        private set
+        {
+            _position = value;
+            positionText.text = value;
+        }
+    }
+    
     public void AddHunger(int value) 
     { 
         Hunger += value;
@@ -81,7 +98,7 @@ public class StatusData : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-
+    
     public void AddStress(int value)
     {
         Stress += value;
@@ -91,11 +108,13 @@ public class StatusData : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
-
+    
     public void SetTemperature(float value)
     {
+        // -52.7 ~ 78.08 = (-10~35(-12.7~38.08) + -20~20) + (0~1) + (-20~20)
+        // -32.7 ~ 58.08
         Temperature = value;
-        if (Temperature <= 28 && Temperature >= 42) GameManager.Instance.GameOver();
+        if (Temperature <= -10 && Temperature >= 45) GameManager.Instance.GameOver();
     }
 
     private void InitStatus()
@@ -104,6 +123,7 @@ public class StatusData : MonoBehaviour
         Moisture = 100;
         Stress = 0;
         Temperature = 36.5f;
+        Position = "베이스캠프";
     }
     
     private void Awake()
@@ -169,23 +189,33 @@ public class StatusData : MonoBehaviour
             }
             elapsed -= timeLength;
 
-            /*
-             * 체감온도 -12.7~38.08
-             * 열원 -20~20
-             * 단열비율 0~1
-             * 질병 -20~20
-             *
-             * 28~42 = (-10~35(-12.7~38.08) + -20~20) + (0~1) + (-20~20)
-             * 체온 = 주변델타(열원) + 옷(단열 비율) + 질병(추가요소)
-             * 주변델타 = 날씨+모닥불 (열원이 없으면 초당 -1도)
-             * 단열 비율이 0이면 주변델타와 질병으로만 결정 / 1이면 36.5 고정
-             * 비율이 높을 수록 따라 체온이 36.5에 근접하게 나와야함
-             */
-            float t = NatureTemperatureSystem.Instance.GetNatureTemperature();
-            float v = 1.3f;
-            var influenceTemperature = 13.12f + 0.6215f * t - 11.37f * Mathf.Pow(v,0.16f) + 0.3965f * Mathf.Pow(v,0.16f) * t;
- 
-            //SetTemperature(36.5f * influenceTemperature);
+            SetTemperature(CalcTemperature());
         }
+    }
+    
+    private float CalcTemperature()
+    {
+        /*
+        * 체감온도 -12.7~38.08
+        * 열원 -20~20
+        * 단열비율 0~1
+        * 질병 -20~20
+        * 생존온도 10~50
+        * 
+        * -52.7 ~ 78.08 = (-10~35(-12.7~38.08) + -20~20) + (0~1) + (-20~20)
+        * 
+        * 체온 = 주변델타(열원) + 옷(단열 비율) + 질병(추가요소)
+        */
+        
+        var t = NatureTemperatureSystem.Instance.GetNatureTemperature();
+            
+        const float v = 1.3f;
+        var influenceTemperature = 13.12f + 0.6215f * t - 11.37f * Mathf.Pow(v,0.16f) + 0.3965f * Mathf.Pow(v,0.16f) * t;
+
+        var targetTemperature = (influenceTemperature + (_insulation - 0) * ((36.5f - influenceTemperature) / (1 - 0))) + _heatSource + _disease;
+        var temperatureDelta = targetTemperature - _temperature;
+        var alpha = Mathf.Clamp01(Mathf.Abs(temperatureDelta) / 100);
+        
+        return Mathf.Lerp(_temperature, targetTemperature, Mathf.Min(0.15f, alpha));
     }
 }
