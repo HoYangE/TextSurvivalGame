@@ -29,5 +29,10 @@ public class PopUpButton : MonoBehaviour
         popUp.Init(content, buttonPrefab);
 
     }
-    
+
+    public void UpdatePopUp()
+    {
+        var popUp = PopUp.Create(currentPopUpName);
+        popUp.Init(content, buttonPrefab);
+    }
 }

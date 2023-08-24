@@ -117,6 +117,11 @@ public class StatusData : MonoBehaviour
         if (Temperature <= -10 && Temperature >= 45) GameManager.Instance.GameOver();
     }
 
+    public void SetPosition(string value)
+    {
+        Position = value;
+    }
+    
     private void InitStatus()
     {
         Hunger = 100;
@@ -124,6 +129,9 @@ public class StatusData : MonoBehaviour
         Stress = 0;
         Temperature = 36.5f;
         Position = "베이스캠프";
+        _heatSource = 0;
+        _insulation = 0.3f;
+        _disease = 0;
     }
     
     private void Awake()

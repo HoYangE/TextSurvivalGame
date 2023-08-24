@@ -2,22 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private float timeScale;
     
+    public Vector2 PlayerPosition { get; set; }
+    
     public static GameManager Instance { get; private set; }
 
     private void Awake()
     {
         Instance = this;
+        Application.targetFrameRate = 144;
     }
 
-    void Start()
+    private void Start()
     {
+        TimeData.Instance.SetTimeScale(timeScale);
         StartCoroutine(TimeCoroutine());
     }
 
@@ -25,7 +28,7 @@ public class GameManager : MonoBehaviour
     {
         
     }
-    
+
     IEnumerator TimeCoroutine()
     {
         var elapsed = 0.0f;
