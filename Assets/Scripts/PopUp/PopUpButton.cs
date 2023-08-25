@@ -10,8 +10,12 @@ public class PopUpButton : MonoBehaviour
     private GameObject content;
     [SerializeField]
     private GameObject buttonPrefab;
+    [SerializeField]
+    private GameObject touchBlock;
     
     private string currentPopUpName;
+    
+    public GameObject TouchBlock => touchBlock;
     
     public void ButtonPopUp(string name)
     {

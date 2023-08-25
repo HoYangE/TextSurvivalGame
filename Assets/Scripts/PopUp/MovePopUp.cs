@@ -9,7 +9,7 @@ public class MovePopUp : PopUp
     {
         ContentOrigin = content;
         ButtonPrefabOrigin = buttonPrefab;
-
+        
         Delete();
         SettingButton();
     }

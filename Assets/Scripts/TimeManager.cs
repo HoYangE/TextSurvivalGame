@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TimeData : MonoBehaviour
+public class TimeManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text yearText;
     [SerializeField] private TMP_Text dateText;
     [SerializeField] private TMP_Text timeText;
 
-    public static TimeData Instance { get; private set; }
+    public static TimeManager Instance { get; private set; }
 
     public float TimeScale { get; private set; }
 

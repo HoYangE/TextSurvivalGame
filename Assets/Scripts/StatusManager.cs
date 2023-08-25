@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class StatusData : MonoBehaviour
+public class StatusManager : MonoBehaviour
 {
     [SerializeField]
     private TMP_Text hungerText;
@@ -17,7 +17,7 @@ public class StatusData : MonoBehaviour
     [SerializeField]
     private TMP_Text positionText;
     
-    public static StatusData Instance { get; private set; }
+    public static StatusManager Instance { get; private set; }
 
     private int _hunger;
     private int _moisture;
@@ -151,7 +151,7 @@ public class StatusData : MonoBehaviour
     {
         // 3weeks
         var elapsed = 0.0f;
-        var timeLength = TimeData.Instance.TimeScale * (3*7*24*60) / 100;
+        var timeLength = TimeManager.Instance.TimeScale * (3*7*24*60) / 100;
         while (true)
         {
             while (elapsed <= timeLength)
@@ -169,7 +169,7 @@ public class StatusData : MonoBehaviour
     {
         // 3days
         var elapsed = 0.0f;
-        var timeLength = TimeData.Instance.TimeScale * (3*24*60) / 100;
+        var timeLength = TimeManager.Instance.TimeScale * (3*24*60) / 100;
         while (true)
         {
             while (elapsed <= timeLength)
@@ -187,7 +187,7 @@ public class StatusData : MonoBehaviour
     {
         // 30minutes
         var elapsed = 0.0f;
-        var timeLength = TimeData.Instance.TimeScale;
+        var timeLength = TimeManager.Instance.TimeScale;
         while (true)
         {
             while (elapsed <= timeLength)

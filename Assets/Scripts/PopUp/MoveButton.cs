@@ -7,9 +7,14 @@ using UnityEngine.UI;
 public class MoveButton : MonoBehaviour
 {
     public Vector2 TargetPos { get; set; }
+    
+    private PopUpButton _popUpButton;
+    
     private void OnEnable()
     {
         transform.GetChild(0).GetComponent<Button>().onClick.AddListener(Move);
+        GameObject.Find("Choice").TryGetComponent<PopUpButton>(out _popUpButton);
+        _popUpButton.TouchBlock.SetActive(false);
     }
 
     private void Move()
@@ -23,24 +28,27 @@ public class MoveButton : MonoBehaviour
     IEnumerator StartMoveCoroutine(string destination, int time)
     {
         var elapsed = 0.0f;
-        var timeLength = TimeData.Instance.TimeScale * (time * 60);
-
+        var timeLength = TimeManager.Instance.TimeScale * (time * 60);
+        _popUpButton.TouchBlock.SetActive(true);
+        
         while (elapsed <= timeLength)
         {
             yield return null;
             elapsed += Time.deltaTime;
             transform.GetChild(0).GetComponent<Image>().fillAmount = elapsed / timeLength;
+            Debug.Log("11");
         }
 
         transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
-        StatusData.Instance.SetPosition(destination);
+        StatusManager.Instance.SetPosition(destination);
         GameManager.Instance.PlayerPosition = TargetPos;
         Init();
     }
 
     private void Init()
     {
-        GameObject.Find("Choice").TryGetComponent<PopUpButton>(out var popUpButton);
-        popUpButton.UpdatePopUp();
+        _popUpButton.UpdatePopUp();
+        _popUpButton.TouchBlock.SetActive(false);
     }
+    
 }

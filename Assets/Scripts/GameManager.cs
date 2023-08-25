@@ -20,19 +20,36 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        TimeData.Instance.SetTimeScale(timeScale);
+        TimeManager.Instance.SetTimeScale(timeScale);
+        DataCheck();
         StartCoroutine(TimeCoroutine());
     }
 
+    private void DataCheck()
+    {
+        DataManager.Instance.CheckStatusData();
+        DataManager.Instance.CheckTimeData();
+        DataManager.Instance.CheckPlayerData();
+        DataManager.Instance.CheckMovePopUpData();
+    }
+    
     public void GameOver()
     {
         
     }
 
+    public void GameOut()
+    {
+        DataManager.Instance.SaveStatusData();
+        DataManager.Instance.SaveTimeData();
+        DataManager.Instance.SavePlayerData();
+        DataManager.Instance.SaveMovePopUpData();
+    }
+    
     IEnumerator TimeCoroutine()
     {
         var elapsed = 0.0f;
-        var timeLength = TimeData.Instance.TimeScale;
+        var timeLength = TimeManager.Instance.TimeScale;
         while (true)
         {
             while (elapsed <= timeLength)
@@ -42,7 +59,7 @@ public class GameManager : MonoBehaviour
             }
 
             elapsed -= timeLength;
-            TimeData.Instance.AddTime(0,1);
+            TimeManager.Instance.AddTime(0,1);
         }
     }
 }

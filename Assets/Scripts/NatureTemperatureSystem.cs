@@ -24,7 +24,7 @@ public class NatureTemperatureSystem : MonoBehaviour
     private float _highestTimeTemperature = 5;
     private float _lowestTimeTemperature = -5;
 
-    private TimeData _timeData;
+    private TimeManager _timeManager;
     
     public static NatureTemperatureSystem Instance { get; private set; }
 
@@ -35,22 +35,22 @@ public class NatureTemperatureSystem : MonoBehaviour
 
     private void Start()
     {
-        _timeData = TimeData.Instance;
+        _timeManager = TimeManager.Instance;
         
-        _day = _timeData.IsLeapYear(_timeData.Year) ? 366 : 365;
-        _hottestDay = _timeData.IsLeapYear(_timeData.Year) ? 211 : 210;
+        _day = _timeManager.IsLeapYear(_timeManager.Year) ? 366 : 365;
+        _hottestDay = _timeManager.IsLeapYear(_timeManager.Year) ? 211 : 210;
 
         _today = CalcToday();
     }
 
     public float GetNatureTemperature()
     {
-        return CalcNatureDayTemperature(_today) + CalcNatureTimeTemperature(_timeData.Hour * 60 + _timeData.Minute);
+        return CalcNatureDayTemperature(_today) + CalcNatureTimeTemperature(_timeManager.Hour * 60 + _timeManager.Minute);
     }
     
     private int CalcToday()
     {
-        return new DateTime(_timeData.Year, _timeData.Month, _timeData.Day).DayOfYear;
+        return new DateTime(_timeManager.Year, _timeManager.Month, _timeManager.Day).DayOfYear;
     }
 
     private float CalcNatureDayTemperature(int day)

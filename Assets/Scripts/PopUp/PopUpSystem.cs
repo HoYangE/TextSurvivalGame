@@ -20,7 +20,7 @@ public abstract class PopUp
     
     protected GameObject ContentOrigin;
     protected GameObject ButtonPrefabOrigin;
-    
+
     public abstract void Init(GameObject content, GameObject buttonPrefab);
 }
 
