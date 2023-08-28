@@ -6,49 +6,56 @@ using UnityEngine.UI;
 
 public class MoveButton : MonoBehaviour
 {
-    public Vector2 TargetPos { get; set; }
+    public MovePopUpData MovePopUpData { get; set; } = new MovePopUpData();
     
     private PopUpButton _popUpButton;
     
-    private void OnEnable()
+    private void Start()
     {
-        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(Move);
-        GameObject.Find("Choice").TryGetComponent<PopUpButton>(out _popUpButton);
-        _popUpButton.TouchBlock.SetActive(false);
+        GameObject.Find("Choice").TryGetComponent(out _popUpButton);
+        
+        if(string.IsNullOrEmpty(DataManager.Instance.MovePopUpData.name))
+            DoMoving();
+        else
+            CantMoving();
     }
 
     private void Move()
     {
-        var text = transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text;
-        var destination = text.Split(':')[0];
-        var time = int.Parse(text.Split(':')[1]);
-        StartCoroutine(StartMoveCoroutine(destination, time));
+        StartMove();
     }
 
-    IEnumerator StartMoveCoroutine(string destination, int time)
+    private void DoMoving()
     {
-        var elapsed = 0.0f;
-        var timeLength = TimeManager.Instance.TimeScale * (time * 60);
-        _popUpButton.TouchBlock.SetActive(true);
-        
-        while (elapsed <= timeLength)
-        {
-            yield return null;
-            elapsed += Time.deltaTime;
-            transform.GetChild(0).GetComponent<Image>().fillAmount = elapsed / timeLength;
-            Debug.Log("11");
-        }
-
-        transform.GetChild(0).GetComponent<Image>().fillAmount = 1;
-        StatusManager.Instance.SetPosition(destination);
-        GameManager.Instance.PlayerPosition = TargetPos;
-        Init();
-    }
-
-    private void Init()
-    {
-        _popUpButton.UpdatePopUp();
+        transform.GetChild(0).GetComponent<Button>().onClick.AddListener(Move);
         _popUpButton.TouchBlock.SetActive(false);
     }
     
+    private void CantMoving()
+    {
+        _popUpButton.TouchBlock.SetActive(true);
+        if (DataManager.Instance.MovePopUpData.name == MovePopUpData.name &&
+            DataManager.Instance.MovePopUpData.position == MovePopUpData.position)
+            StartCoroutine(StartMoveCoroutine());
+    }
+
+    private void StartMove()
+    {
+        DataManager.Instance.MovePopUpData = MovePopUpData;
+        DataManager.Instance.MovePopUpData.time = Time.realtimeSinceStartup;
+
+        StartCoroutine(StartMoveCoroutine());
+        GameManager.Instance.StartMoving();
+    }
+    
+    IEnumerator StartMoveCoroutine()
+    {
+        _popUpButton.TouchBlock.SetActive(true);
+        
+        while (GameManager.Instance.MoveNormTime <= 1)
+        {
+            yield return null;
+            transform.GetChild(0).GetComponent<Image>().fillAmount = GameManager.Instance.MoveNormTime;
+        }
+    }
 }

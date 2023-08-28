@@ -28,7 +28,8 @@ public class PopUpButton : MonoBehaviour
 
         buttonPopUp.SetActive(true);
         currentPopUpName = name;
-
+        touchBlock.SetActive(false);
+        
         var popUp = PopUp.Create(name);
         popUp.Init(content, buttonPrefab);
 

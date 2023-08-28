@@ -18,9 +18,11 @@ public class StatusData
 [Serializable]
 public class TimeData
 {
-    public string year;
-    public string date;
-    public string time;
+    public int year;
+    public int month;
+    public int day;
+    public int hour;
+    public int minute;
 }
 
 [Serializable]
@@ -34,7 +36,8 @@ public class MovePopUpData
 {
     public string name;
     public Vector2 position;
-    public TimeData time;
+    public float time;
+    public int timeLength;
 }
 
 public class DataManager : MonoBehaviour
@@ -133,9 +136,11 @@ public class DataManager : MonoBehaviour
 
     private void InitTimeData()
     {
-        TimeData.year = "1001";
-        TimeData.date = "4/1";
-        TimeData.time = "10:00";
+        TimeData.year = 1001;
+        TimeData.month = 4;
+        TimeData.day = 1;
+        TimeData.hour = 10;
+        TimeData.minute = 0;
     }
     
     private void InitPlayerData()
@@ -145,14 +150,10 @@ public class DataManager : MonoBehaviour
     
     private void InitMovePopUpData()
     {
-        MovePopUpData.name = "베이스캠프";
+        MovePopUpData.name = null;
         MovePopUpData.position = new Vector2(0, 0);
-        MovePopUpData.time = new TimeData
-        {
-            year = "1001",
-            date = "4/1",
-            time = "10:00"
-        };
+        MovePopUpData.time = 0;
+        MovePopUpData.timeLength = 0;
     }
 
     public void InitAllData()

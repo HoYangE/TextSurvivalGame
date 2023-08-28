@@ -14,11 +14,9 @@ public class TimeManager : MonoBehaviour
 
     public float TimeScale { get; private set; }
 
-    public int Year { get; private set; }
-    public int Month { get; private set; }
-    public int Day { get; private set; }
-    public int Hour { get; private set; }
-    public int Minute { get; private set; }
+    public TimeData TimeData { get; set; } = new TimeData();
+    
+
 
     private int[] _daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
@@ -42,40 +40,40 @@ public class TimeManager : MonoBehaviour
 
     public void SetTime(int hour, int minute)
     {
-        Hour = hour;
-        Minute = minute;
+        TimeData.hour = hour;
+        TimeData.minute = minute;
     }
 
     public void AddTime(int hour, int minute)
     {
-        Hour += hour;
-        Minute += minute;
-        timeText.text = $"{Hour:D2}:{Minute:D2}";
+        TimeData.hour += hour;
+        TimeData.minute += minute;
+        timeText.text = $"{TimeData.hour:D2}:{TimeData.minute:D2}";
         HourUpdate();
         DayUpdate();
     }
 
     private void HourUpdate()
     {
-        if (Minute < 60) return;
-        Hour++;
-        Minute -= 60;
-        timeText.text = $"{Hour:D2}:{Minute:D2}";
+        if (TimeData.minute < 60) return;
+        TimeData.hour++;
+        TimeData.minute -= 60;
+        timeText.text = $"{TimeData.hour:D2}:{TimeData.minute:D2}";
     }
 
     private void DayUpdate()
     {
-        if (Hour < 24) return;
-        Hour -= 24;
-        timeText.text = $"{Hour:D2}:{Minute:D2}";
+        if (TimeData.hour < 24) return;
+        TimeData.hour -= 24;
+        timeText.text = $"{TimeData.hour:D2}:{TimeData.minute:D2}";
         AddDate(0, 0, 1);
     }
 
     public void SetDate(int year, int month, int day)
     {
-        Year = year;
-        Month = month;
-        Day = day;
+        TimeData.year = year;
+        TimeData.month = month;
+        TimeData.day = day;
 
         yearText.text = $"{year:D4}";
         dateText.text = $"{month:D2}.{day:D2}";
@@ -83,9 +81,9 @@ public class TimeManager : MonoBehaviour
 
     public void AddDate(int year, int month, int day)
     {
-        Year += year;
-        Month += month;
-        Day += day;
+        TimeData.year += year;
+        TimeData.month += month;
+        TimeData.day += day;
         
         var yearTextValue = int.Parse(yearText.text);
         var dateTextValue = dateText.text.Split('.');
@@ -104,8 +102,8 @@ public class TimeManager : MonoBehaviour
         if (currentDay + addDay <= GetMaxDaysInMonth(month, year)) return;
         monthTextValue++;
         dateTextComponent.text = $"{monthTextValue:D2}.{currentDay + addDay - GetMaxDaysInMonth(month, year):D2}";
-        Day = currentDay + addDay - GetMaxDaysInMonth(month, year);
-        Month = monthTextValue;
+        TimeData.day = currentDay + addDay - GetMaxDaysInMonth(month, year);
+        TimeData.month = monthTextValue;
     }
 
     private int GetMaxDaysInMonth(int month, int year)
@@ -134,9 +132,9 @@ public class TimeManager : MonoBehaviour
         yearText.text = $"{yearTextValue + 1:D4}";
         dateText.text = $"01.{dayTextValue:D2}";
         
-        Year = yearTextValue + 1;
-        Month = 1;
-        Day = dayTextValue;
+        TimeData.year = yearTextValue + 1;
+        TimeData.month = 1;
+        TimeData.day = dayTextValue;
     }
 
 }

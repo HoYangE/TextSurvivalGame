@@ -37,20 +37,20 @@ public class NatureTemperatureSystem : MonoBehaviour
     {
         _timeManager = TimeManager.Instance;
         
-        _day = _timeManager.IsLeapYear(_timeManager.Year) ? 366 : 365;
-        _hottestDay = _timeManager.IsLeapYear(_timeManager.Year) ? 211 : 210;
+        _day = _timeManager.IsLeapYear(_timeManager.TimeData.year) ? 366 : 365;
+        _hottestDay = _timeManager.IsLeapYear(_timeManager.TimeData.year) ? 211 : 210;
 
         _today = CalcToday();
     }
 
     public float GetNatureTemperature()
     {
-        return CalcNatureDayTemperature(_today) + CalcNatureTimeTemperature(_timeManager.Hour * 60 + _timeManager.Minute);
+        return CalcNatureDayTemperature(_today) + CalcNatureTimeTemperature(_timeManager.TimeData.hour * 60 + _timeManager.TimeData.minute);
     }
     
     private int CalcToday()
     {
-        return new DateTime(_timeManager.Year, _timeManager.Month, _timeManager.Day).DayOfYear;
+        return new DateTime(_timeManager.TimeData.year, _timeManager.TimeData.month, _timeManager.TimeData.day).DayOfYear;
     }
 
     private float CalcNatureDayTemperature(int day)

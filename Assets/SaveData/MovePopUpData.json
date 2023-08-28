@@ -1,12 +1,9 @@
 {
-    "name": "베이스캠프",
+    "name": "",
     "position": {
         "x": 0.0,
         "y": 0.0
     },
-    "time": {
-        "year": "1001",
-        "date": "4/1",
-        "time": "10:00"
-    }
+    "time": 0.0,
+    "timeLength": 0
 }

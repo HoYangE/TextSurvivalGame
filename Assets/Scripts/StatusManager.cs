@@ -23,7 +23,7 @@ public class StatusManager : MonoBehaviour
     private int _moisture;
     private int _stress;
     private float _temperature;
-    private string _position;
+    private string _positionName;
     
     private float _heatSource;
     private float _insulation;
@@ -69,12 +69,12 @@ public class StatusManager : MonoBehaviour
         }
     }
 
-    public string Position
+    public string PositionName
     {
-        get => _position;
+        get => _positionName;
         private set
         {
-            _position = value;
+            _positionName = value;
             positionText.text = value;
         }
     }
@@ -117,9 +117,9 @@ public class StatusManager : MonoBehaviour
         if (Temperature <= -10 && Temperature >= 45) GameManager.Instance.GameOver();
     }
 
-    public void SetPosition(string value)
+    public void SetPositionName(string value)
     {
-        Position = value;
+        PositionName = value;
     }
     
     private void InitStatus()
@@ -128,7 +128,7 @@ public class StatusManager : MonoBehaviour
         Moisture = 100;
         Stress = 0;
         Temperature = 36.5f;
-        Position = "베이스캠프";
+        PositionName = "베이스캠프";
         _heatSource = 0;
         _insulation = 0.3f;
         _disease = 0;

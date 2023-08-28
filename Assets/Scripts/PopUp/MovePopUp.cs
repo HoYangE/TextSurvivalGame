@@ -39,8 +39,16 @@ public class MovePopUp : PopUp
 
             var text = t["Name"] + " : " + distance;
             gameObject.transform.GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = text;
+            
+            var movePopUpData = new MovePopUpData()
+            {
+                name = t["Name"].ToString(),
+                position = targetPos,
+                timeLength = distance
+            };
+            
             gameObject.AddComponent<MoveButton>();
-            gameObject.GetComponent<MoveButton>().TargetPos = targetPos;
+            gameObject.GetComponent<MoveButton>().MovePopUpData = movePopUpData;
         }
     }
 }
