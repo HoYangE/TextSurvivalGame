@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        Application.targetFrameRate = 144;
+        Application.targetFrameRate = 30;
     }
 
     private void Start()
