@@ -6,7 +6,6 @@ using UnityEngine;
 public class NatureTemperatureSystem : MonoBehaviour
 {
     private int _day;
-    private int _today;
     private float _natureDayTemperature;
     private float _natureTimeTemperature;
     private const int MinutePerDay = 1440;
@@ -26,26 +25,14 @@ public class NatureTemperatureSystem : MonoBehaviour
 
     private TimeManager _timeManager;
     
-    public static NatureTemperatureSystem Instance { get; private set; }
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    private void Start()
-    {
-        _timeManager = TimeManager.Instance;
-        
-        _day = _timeManager.IsLeapYear(_timeManager.TimeData.year) ? 366 : 365;
-        _hottestDay = _timeManager.IsLeapYear(_timeManager.TimeData.year) ? 211 : 210;
-
-        _today = CalcToday();
-    }
-
     public float GetNatureTemperature()
     {
-        return CalcNatureDayTemperature(_today) + CalcNatureTimeTemperature(_timeManager.TimeData.hour * 60 + _timeManager.TimeData.minute);
+        _timeManager = TimeManager.Instance;
+        var isLeapYear = _timeManager.IsLeapYear(_timeManager.TimeData.year);
+        _day = isLeapYear ? 366 : 365;
+        _hottestDay = isLeapYear ? 211 : 210;
+        
+        return CalcNatureDayTemperature(CalcToday()) + CalcNatureTimeTemperature(_timeManager.TimeData.hour * 60 + _timeManager.TimeData.minute);
     }
     
     private int CalcToday()

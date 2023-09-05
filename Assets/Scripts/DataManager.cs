@@ -40,20 +40,18 @@ public class MovePopUpData
     public int timeLength;
 }
 
-public class DataManager : MonoBehaviour
+public class DataManager : Singleton<DataManager>
 {
     private string _statusDataPath;
     private string _timeDataPath;
     private string _playerDataPath;
     private string _movePopUpDataPath;
     
-    public static DataManager Instance { get; private set; }
-
     public StatusData StatusData { get; set; } = new StatusData();
     public TimeData TimeData { get; set; } = new TimeData();
     public PlayerData PlayerData { get; set; } = new PlayerData();
     public MovePopUpData MovePopUpData { get; set; } = new MovePopUpData();
-
+    
     private void Awake()
     {
         // 빌드용
@@ -61,14 +59,12 @@ public class DataManager : MonoBehaviour
         //_timeDataPath = Application.persistentDataPath + "/TimeData.json";
         //_playerDataPath = Application.persistentDataPath + "/PlayerData.json";
         //_movePopUpDataPath = Application.persistentDataPath + "/MovePopUpData.json";
-        
+
         // 테스트용
         _statusDataPath = Application.dataPath + "/SaveData/StatusData.json";
         _timeDataPath = Application.dataPath + "/SaveData/TimeData.json";
         _playerDataPath = Application.dataPath + "/SaveData/PlayerData.json";
         _movePopUpDataPath = Application.dataPath + "/SaveData/MovePopUpData.json";
-        
-        Instance = this;
     }
 
     #region SaveLoad

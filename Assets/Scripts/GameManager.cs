@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Scripting;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField]
     private float timeScale;
@@ -12,11 +10,8 @@ public class GameManager : MonoBehaviour
     public Vector2 PlayerPosition { get; set; }
     public float MoveNormTime { get; set; }
     
-    public static GameManager Instance { get; private set; }
-
     private void Awake()
     {
-        Instance = this;
         Application.targetFrameRate = 30;
     }
 

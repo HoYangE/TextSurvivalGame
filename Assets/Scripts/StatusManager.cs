@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class StatusManager : MonoBehaviour
+public class StatusManager : Singleton<StatusManager>
 {
     [SerializeField]
     private TMP_Text hungerText;
@@ -17,8 +17,9 @@ public class StatusManager : MonoBehaviour
     [SerializeField]
     private TMP_Text positionText;
     
-    public static StatusManager Instance { get; private set; }
-
+    [SerializeField]
+    private NatureTemperatureSystem natureTemperatureSystem;
+    
     private int _hunger;
     private int _moisture;
     private int _stress;
@@ -136,7 +137,6 @@ public class StatusManager : MonoBehaviour
     
     private void Awake()
     {
-        Instance = this;
         InitStatus();
     }
 
@@ -215,7 +215,7 @@ public class StatusManager : MonoBehaviour
         * 체온 = 주변델타(열원) + 옷(단열 비율) + 질병(추가요소)
         */
         
-        var t = NatureTemperatureSystem.Instance.GetNatureTemperature();
+        var t = natureTemperatureSystem.GetNatureTemperature();
             
         const float v = 1.3f;
         var influenceTemperature = 13.12f + 0.6215f * t - 11.37f * Mathf.Pow(v,0.16f) + 0.3965f * Mathf.Pow(v,0.16f) * t;

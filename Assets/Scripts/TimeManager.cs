@@ -4,19 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : Singleton<TimeManager>
 {
     [SerializeField] private TMP_Text yearText;
     [SerializeField] private TMP_Text dateText;
     [SerializeField] private TMP_Text timeText;
-
-    public static TimeManager Instance { get; private set; }
-
+    
     public float TimeScale { get; private set; }
 
     public TimeData TimeData { get; set; } = new TimeData();
-    
-
 
     private int[] _daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
@@ -28,7 +24,6 @@ public class TimeManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         TimeScale = 1;
         InitTime();
     }
