@@ -2,10 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-#if PLATFORM_ANDROID
-using UnityEngine.Android;
-#endif
-
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField]
@@ -21,13 +17,6 @@ public class GameManager : Singleton<GameManager>
     
     private void Start()
     {
-        #if UNITY_ANDROID
-        if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
-        {
-            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
-        }
-        #endif
-        
         TimeManager.Instance.SetTimeScale(timeScale);
         DataCheck();
         StartCoroutine(TimeCoroutine());

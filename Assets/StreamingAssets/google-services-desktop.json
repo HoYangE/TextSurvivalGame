@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "436831904660",
+    "project_id": "fcm-test-c4c8e",
+    "storage_bucket": "fcm-test-c4c8e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:436831904660:android:218e51c5b661ab46f7e581",
+        "android_client_info": {
+          "package_name": "com.ChungKang.TextSurvivalGame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeazRpjhqLRlOxKc_8a12cDAN07C8YTzQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

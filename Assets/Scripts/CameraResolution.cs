@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CameraResolution : MonoBehaviour
 {
@@ -25,8 +23,13 @@ public class CameraResolution : MonoBehaviour
         cameraComponent.rect = rect;
     }
 
-    private void Update()
+    private void Awake()
     {
         Fill();
+    }
+    
+    private void Start()
+    {
+        RenderPipelineManager.beginFrameRendering += (context, camera) => { GL.Clear(true, true, Color.black); };
     }
 }
