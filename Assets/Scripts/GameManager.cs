@@ -2,6 +2,10 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+#if PLATFORM_ANDROID
+using UnityEngine.Android;
+#endif
+
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField]
@@ -14,9 +18,16 @@ public class GameManager : Singleton<GameManager>
     {
         Application.targetFrameRate = 30;
     }
-
+    
     private void Start()
     {
+        #if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
+        {
+            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
+        }
+        #endif
+        
         TimeManager.Instance.SetTimeScale(timeScale);
         DataCheck();
         StartCoroutine(TimeCoroutine());
@@ -35,6 +46,15 @@ public class GameManager : Singleton<GameManager>
         
     }
 
+    public void GameOut2()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+    
     public void GameOut()
     {
         DataManager.Instance.SaveStatusData();

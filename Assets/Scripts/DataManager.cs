@@ -55,16 +55,16 @@ public class DataManager : Singleton<DataManager>
     private void Awake()
     {
         // 빌드용
-        //_statusDataPath = Application.persistentDataPath + "/StatusData.json";
-        //_timeDataPath = Application.persistentDataPath + "/TimeData.json";
-        //_playerDataPath = Application.persistentDataPath + "/PlayerData.json";
-        //_movePopUpDataPath = Application.persistentDataPath + "/MovePopUpData.json";
+        _statusDataPath = Application.persistentDataPath + "/StatusData.json";
+        _timeDataPath = Application.persistentDataPath + "/TimeData.json";
+        _playerDataPath = Application.persistentDataPath + "/PlayerData.json";
+        _movePopUpDataPath = Application.persistentDataPath + "/MovePopUpData.json";
 
         // 테스트용
-        _statusDataPath = Application.dataPath + "/SaveData/StatusData.json";
-        _timeDataPath = Application.dataPath + "/SaveData/TimeData.json";
-        _playerDataPath = Application.dataPath + "/SaveData/PlayerData.json";
-        _movePopUpDataPath = Application.dataPath + "/SaveData/MovePopUpData.json";
+        //_statusDataPath = Application.dataPath + "/SaveData/StatusData.json";
+        //_timeDataPath = Application.dataPath + "/SaveData/TimeData.json";
+        //_playerDataPath = Application.dataPath + "/SaveData/PlayerData.json";
+        //_movePopUpDataPath = Application.dataPath + "/SaveData/MovePopUpData.json";
     }
 
     #region SaveLoad
